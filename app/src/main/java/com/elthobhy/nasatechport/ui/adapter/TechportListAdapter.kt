@@ -2,14 +2,13 @@ package com.elthobhy.nasatechport.ui.adapter
 
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.elthobhy.nasatechport.databinding.ItemQuoteBinding
 import com.elthobhy.nasatechport.data.remote.TechportResponseItem
+import com.elthobhy.nasatechport.databinding.ItemQuoteBinding
 import com.elthobhy.nasatechport.ui.detail.DetailActivity
 import com.elthobhy.nasatechport.utils.Constants
 import java.time.LocalDate

@@ -25,7 +25,7 @@ abstract class TechportDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
-                    TechportDatabase::class.java, "quote_database"
+                    TechportDatabase::class.java, "techport_database"
                 )
                     .fallbackToDestructiveMigration()
                     .build()

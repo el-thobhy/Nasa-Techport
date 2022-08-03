@@ -1,19 +1,19 @@
 package com.elthobhy.nasatechport.ui.main
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.elthobhy.nasatechport.databinding.ActivityMainBinding
 import com.elthobhy.nasatechport.ui.adapter.LoadingStateAdapter
 import com.elthobhy.nasatechport.ui.adapter.TechportListAdapter
-import com.elthobhy.nasatechport.databinding.ActivityMainBinding
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel: MainViewModel by viewModels {
-        ViewModelFactory(this)
-    }
+    private val mainViewModel by inject<MainViewModel>()
+    private val adapterList by inject<TechportListAdapter>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +26,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val adapter = TechportListAdapter()
-        binding.rvQuote.adapter = adapter.withLoadStateFooter(
+        binding.rvQuote.adapter = adapterList.withLoadStateFooter(
             footer = LoadingStateAdapter {
-                adapter.retry()
+                adapterList.retry()
             }
         )
         mainViewModel.quote.observe(this) {
-            adapter.submitData(lifecycle, it)
+            adapterList.submitData(lifecycle, it)
         }
     }
 }

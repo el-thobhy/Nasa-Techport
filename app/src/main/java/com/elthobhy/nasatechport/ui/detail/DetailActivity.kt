@@ -9,15 +9,14 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.elthobhy.nasatechport.databinding.ActivityDetailBinding
 import com.elthobhy.nasatechport.utils.Constants
+import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-    private val viewModel: DetailViewModel by viewModels {
-        ViewModelFactoryDetail(this)
-    }
+    private val viewModel by inject<DetailViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
