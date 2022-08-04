@@ -10,11 +10,11 @@ import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.elthobhy.nasatechport.DataDummy
 import com.elthobhy.nasatechport.MainDispatcherRule
-import com.elthobhy.nasatechport.ui.adapter.TechportListAdapter
-import com.elthobhy.nasatechport.data.TechportRepository
+import com.elthobhy.nasatechport.core.ui.adapter.TechportListAdapter
+import com.elthobhy.nasatechport.core.data.TechportRepository
 import com.elthobhy.nasatechport.getOrAwaitValue
-import com.elthobhy.nasatechport.data.remote.QuoteResponseItem
-import com.elthobhy.nasatechport.ui.main.MainViewModel
+import com.elthobhy.nasatechport.core.data.remote.QuoteResponseItem
+import com.elthobhy.nasatechport.main.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -48,7 +48,7 @@ class MainViewModelTest {
         Mockito.`when`(techportRepository.getData()).thenReturn(expectedQuote)
         
         val mainViewModel = MainViewModel(techportRepository)
-        val actualQuote: PagingData<QuoteResponseItem> = mainViewModel.quote.getOrAwaitValue()
+        val actualQuote: PagingData<QuoteResponseItem> = mainViewModel.techport.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = TechportListAdapter.DIFF_CALLBACK,

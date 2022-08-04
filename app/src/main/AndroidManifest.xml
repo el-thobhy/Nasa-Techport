@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyUnlimitedQuotes">
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name="com.elthobhy.nasatechport.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.elthobhy.nasatechport.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
