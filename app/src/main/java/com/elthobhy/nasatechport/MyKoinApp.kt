@@ -1,7 +1,10 @@
 package com.elthobhy.nasatechport
 
 import android.app.Application
-import com.elthobhy.nasatechport.core.di.*
+import com.elthobhy.nasatechport.core.di.databaseModule
+import com.elthobhy.nasatechport.core.di.networking
+import com.elthobhy.nasatechport.core.di.repositoryModule
+import com.elthobhy.nasatechport.di.adapterModule
 import com.elthobhy.nasatechport.di.useCaseModule
 import com.elthobhy.nasatechport.di.viewModelModule
 import org.koin.android.ext.koin.androidContext

@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Nasa Techport"
 include ':app'
+include ':core'

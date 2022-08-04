@@ -3,11 +3,11 @@ package com.elthobhy.nasatechport.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.elthobhy.nasatechport.databinding.ActivityDetailBinding
-import com.elthobhy.nasatechport.core.utils.Constants
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -22,8 +22,8 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val id = intent.getStringExtra(Constants.DATA)
-        Log.e("id", "onCreate: $id", )
+        val id = intent.getStringExtra(SyncStateContract.Constants.DATA)
+        Log.e("id", "onCreate: $id" )
         if (id != null) {
             viewModel.getDetail(id).observe(this){ dataDetail->
                 binding.apply {

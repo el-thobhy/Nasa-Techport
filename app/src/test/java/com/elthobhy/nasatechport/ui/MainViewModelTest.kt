@@ -10,10 +10,10 @@ import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.elthobhy.nasatechport.DataDummy
 import com.elthobhy.nasatechport.MainDispatcherRule
-import com.elthobhy.nasatechport.core.ui.adapter.TechportListAdapter
-import com.elthobhy.nasatechport.core.data.TechportRepository
+import com.elthobhy.nasatechport.main.TechportListAdapter
+import com.elthobhy.nasatechport.core.core.data.TechportRepository
 import com.elthobhy.nasatechport.getOrAwaitValue
-import com.elthobhy.nasatechport.core.data.remote.QuoteResponseItem
+import com.elthobhy.nasatechport.core.core.data.remote.QuoteResponseItem
 import com.elthobhy.nasatechport.main.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

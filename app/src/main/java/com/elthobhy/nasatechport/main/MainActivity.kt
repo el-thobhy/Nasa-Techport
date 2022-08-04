@@ -5,10 +5,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.elthobhy.nasatechport.databinding.ActivityMainBinding
 import com.elthobhy.nasatechport.core.ui.adapter.LoadingStateAdapter
-import com.elthobhy.nasatechport.core.ui.adapter.TechportListAdapter
 import com.elthobhy.nasatechport.core.utils.vo.Status
+import com.elthobhy.nasatechport.databinding.ActivityMainBinding
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {

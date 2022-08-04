@@ -1,6 +1,6 @@
 package com.elthobhy.nasatechport
 
-import com.elthobhy.nasatechport.core.data.remote.QuoteResponseItem
+import com.elthobhy.nasatechport.core.core.data.remote.QuoteResponseItem
 
 object DataDummy {
 
