@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     Status.SUCCESS->{
-                        apodAdapter.submitList(it.data)
+                        apodAdapter.submitList(it.data?.reversed())
                         Log.e("dataMain", "getData: ${it.data}")
                     }
                     Status.ERROR->{
