@@ -11,4 +11,5 @@
     <string name="text_title">Text Title</string>
     <string name="copyright">Copyright</string>
     <string name="date_upload">Date Upload</string>
+    <string name="nasa_open_data">Nasa Open Data</string>
 </resources>

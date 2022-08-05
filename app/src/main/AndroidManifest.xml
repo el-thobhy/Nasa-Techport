@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elthobhy.nasatechport">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MyKoinApp"
@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyUnlimitedQuotes">
         <activity
+            android:name="com.elthobhy.nasatechport.main.MainActivity"
+            android:exported="false" />
+        <activity
             android:name="com.elthobhy.nasatechport.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.elthobhy.nasatechport.main.MainActivity"
+            android:name="com.elthobhy.nasatechport.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

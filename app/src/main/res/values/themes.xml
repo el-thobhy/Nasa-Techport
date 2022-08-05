@@ -16,4 +16,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
+    <style name="background_splash">
+        <item name="android:tint">@color/black</item>
+    </style>
 </resources>
