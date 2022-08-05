@@ -67,7 +67,7 @@ class DetailActivity : AppCompatActivity() {
                         responsibleNasaProgram.text = apod?.copyright
                         descriptionProject.text = apod?.explanation
                         Glide.with(this@DetailActivity)
-                            .load(apod?.hdurl)
+                            .load(apod?.url)
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .placeholder(R.color.white)
                             .into(imageDetail)

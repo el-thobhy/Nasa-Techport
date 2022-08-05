@@ -33,7 +33,7 @@ class ApodAdapter: ListAdapter<Apod, ApodAdapter.MyViewHolder>(DIFF_CALLBACK) {
         fun bind(data: Apod?) {
             binding.apply {
                 Glide.with(itemView)
-                    .load(data?.hdurl)
+                    .load(data?.url)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(R.color.white)
                     .into(imageApod)
