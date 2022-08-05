@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 
 @Database(
-    entities = [RemoteKeys::class, TechportEntity::class],
+    entities = [RemoteKeys::class, TechportEntity::class, ApodEntity::class],
     version = 2,
     exportSchema = false
 )

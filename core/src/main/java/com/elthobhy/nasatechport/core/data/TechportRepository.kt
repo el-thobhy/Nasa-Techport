@@ -1,20 +1,27 @@
 package com.elthobhy.nasatechport.core.data
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.paging.*
 import com.elthobhy.nasatechport.core.data.local.LocalDataSource
+import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 import com.elthobhy.nasatechport.core.data.local.room.TechportDatabase
 import com.elthobhy.nasatechport.core.data.remote.RemoteDataSource
 import com.elthobhy.nasatechport.core.data.remote.network.ApiService
+import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
 import com.elthobhy.nasatechport.core.data.remote.response.vo.ApiResponse
+import com.elthobhy.nasatechport.core.domain.model.Apod
 import com.elthobhy.nasatechport.core.domain.repository.ITechportRepository
 import com.elthobhy.nasatechport.core.utils.AppExecutors
 import com.elthobhy.nasatechport.core.utils.DataMapper
 import com.elthobhy.nasatechport.core.utils.vo.Resource
 import com.elthobhy.nasatechport.core.domain.model.Techport
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 class TechportRepository(
@@ -30,7 +37,7 @@ class TechportRepository(
     @OptIn(ExperimentalPagingApi::class)
     override fun getData(): Flow<Resource<PagingData<Techport>>> =
         object : NetworkBoundResource<PagingData<Techport>, List<TechportEntity>>(){
-            override fun loadFromDb(): Flow<PagingData<Techport>> {
+            override suspend fun loadFromDb(): Flow<PagingData<Techport>> {
                 return Pager(
                     config = PagingConfig(
                         pageSize = 5
@@ -56,6 +63,30 @@ class TechportRepository(
 
 
         }.asFlow()
+
+    override fun getApod(): Flow<Resource<List<Apod>>> =
+        object : NetworkBoundResource<List<Apod>, List<ApodResponseItem>>(){
+            override suspend fun loadFromDb(): Flow<List<Apod>> {
+               return localDataSource.getApod().map {
+                   DataMapper.mapApodToDomain(it)
+               }
+            }
+
+            override fun shouldFetch(data: List<Apod>?): Boolean {
+                return true
+            }
+
+            @RequiresApi(Build.VERSION_CODES.O)
+            override suspend fun createCall(): Flow<ApiResponse<List<ApodResponseItem>>> {
+                return remoteDataSource.getApodData()
+            }
+
+            override suspend fun saveCallResult(data: List<ApodResponseItem>) {
+                val response = DataMapper.mapApodResponToDomain(data)
+                return localDataSource.insertApod(response)
+            }
+        }.asFlow()
+
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getFavorite(): Flow<PagingData<Techport>> {

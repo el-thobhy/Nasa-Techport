@@ -4,9 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.elthobhy.nasatechport.core.domain.usecase.TechportUsecase
 
-class MainViewModel(private val techportUsecase: TechportUsecase) : ViewModel() {
-
-    fun techport() = techportUsecase.getData().asLiveData()
-
+class ApodViewModel(private val techportUsecase: TechportUsecase): ViewModel() {
+    fun apod() = techportUsecase.getApod().asLiveData()
 }
-

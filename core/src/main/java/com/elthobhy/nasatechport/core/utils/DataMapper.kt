@@ -2,8 +2,11 @@ package com.elthobhy.nasatechport.core.utils
 
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
+import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
 import com.elthobhy.nasatechport.core.data.remote.response.TechportResponseItem
+import com.elthobhy.nasatechport.core.domain.model.Apod
 import com.elthobhy.nasatechport.core.domain.model.Techport
 
 object DataMapper {
@@ -52,6 +55,44 @@ object DataMapper {
                 projectapiurl = input.projectapiurl,
                 primarytaxonomy = input.primarytaxonomy,
                 isFavorite = input.isFavorite)
+
+    fun mapApodToDomain(input: List<ApodEntity>?): List<Apod> {
+        val outout = ArrayList<Apod>()
+        input?.map{
+            val apod = Apod(
+                date = it.date,
+                title = it.title,
+                copyright = it.copyright,
+                explanation = it.explanation,
+                hdurl = it.hdurl,
+                mediaType = it.mediaType,
+                serviceVersion = it.serviceVersion,
+                url = it.url
+            )
+            outout.add(apod)
+        }
+        return outout
+    }
+
+
+    fun mapApodResponToDomain(input: List<ApodResponseItem>?): List<ApodEntity> {
+        val output = ArrayList<ApodEntity>()
+        input?.map{
+            val apod = ApodEntity(
+                date = it.date,
+                title = it.title,
+                copyright = it.copyright,
+                explanation = it.explanation,
+                hdurl = it.hdurl,
+                mediaType = it.mediaType,
+                serviceVersion = it.serviceVersion,
+                url = it.url!!
+            )
+            output.add(apod)
+        }
+        return output
+    }
+
 
     fun mapDomainToEntity(input: Techport) = TechportEntity(
         projectid = input.projectid,

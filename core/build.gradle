@@ -16,6 +16,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField("String", "API_KEY", '"48IbyZpnDKtrMWE467TX0ZRD1RhhCODVi1SHTKLr"')
+        buildConfigField("String", "BASE_URL", '"https://api.nasa.gov/"')
     }
 
     buildTypes {
