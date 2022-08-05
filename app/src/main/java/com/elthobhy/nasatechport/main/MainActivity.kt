@@ -3,16 +3,11 @@ package com.elthobhy.nasatechport.main
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.elthobhy.nasatechport.R
-import com.elthobhy.nasatechport.core.data.remote.RemoteDataSource
 import com.elthobhy.nasatechport.core.ui.adapter.LoadingStateAdapter
 import com.elthobhy.nasatechport.core.utils.vo.Status
 import com.elthobhy.nasatechport.databinding.ActivityMainBinding
@@ -58,12 +53,9 @@ class MainActivity : AppCompatActivity() {
                             },1500)
                     }
                     Status.ERROR->{
-                        Log.e("mainActivity", "getData: ${it.data}", )
+                        Toast.makeText(this, "Please Check your Internet Connection",Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-            else{
-                Log.e("mainActivity", "getData: $it", )
             }
         }
     }
@@ -94,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                             },1500)
                     }
                     Status.ERROR->{
-                        Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Please Check your Internet Connection",Toast.LENGTH_SHORT).show()
                     }
                 }
             }
