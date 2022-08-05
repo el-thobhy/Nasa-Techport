@@ -32,7 +32,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginBottom="10dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
                     tools:src="@tools:sample/avatars"/>
                 <TextView
                     android:id="@+id/title_project"

@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.SyncStateContract
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -70,11 +71,12 @@ class DetailActivity : AppCompatActivity() {
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .placeholder(R.color.white)
                             .into(imageDetail)
-                        goToLink.setOnClickListener {
+                        imageDetail.setOnClickListener {
                             val intent = Intent(Intent.ACTION_VIEW)
                             intent.data = Uri.parse(apod?.url)
                             startActivity(intent)
                         }
+                        goToLink.visibility = View.GONE
                         supportActionBar?.title = "Astronomy Picture of The Day"
                     }
                 }
