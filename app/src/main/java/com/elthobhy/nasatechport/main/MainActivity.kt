@@ -1,7 +1,10 @@
 package com.elthobhy.nasatechport.main
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -43,11 +46,16 @@ class MainActivity : AppCompatActivity() {
             if(it != null){
                 when(it.status){
                     Status.LOADING->{
-
+                        binding.shimmerApod.visibility = View.VISIBLE
+                        binding.rvApod.visibility = View.GONE
                     }
                     Status.SUCCESS->{
                         apodAdapter.submitList(it.data?.reversed())
-                        Log.e("dataMain", "getData: ${it.data}")
+                        Handler(Looper.getMainLooper())
+                            .postDelayed({
+                                binding.shimmerApod.visibility = View.GONE
+                                binding.rvApod.visibility = View.VISIBLE
+                            },1500)
                     }
                     Status.ERROR->{
                         Log.e("mainActivity", "getData: ${it.data}", )
@@ -72,11 +80,18 @@ class MainActivity : AppCompatActivity() {
                 when(it.status){
                     Status.LOADING->{
                         adapterList.retry()
+                        binding.shimmerTechport.visibility = View.VISIBLE
+                        binding.rvQuote.visibility = View.GONE
                     }
                     Status.SUCCESS->{
                         lifecycleScope.launchWhenStarted {
                             it.data?.let { it1 -> adapterList.submitData(it1) }
                         }
+                        Handler(Looper.getMainLooper())
+                            .postDelayed({
+                                binding.shimmerTechport.visibility = View.GONE
+                                binding.rvQuote.visibility = View.VISIBLE
+                            },1500)
                     }
                     Status.ERROR->{
                         Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT).show()
