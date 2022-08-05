@@ -56,6 +56,17 @@ object DataMapper {
                 primarytaxonomy = input.primarytaxonomy,
                 isFavorite = input.isFavorite)
 
+    fun mapApodEntitiesToDomain(input: ApodEntity) =
+        Apod(
+            date = input.date,
+            title = input.title,
+            copyright = input.copyright,
+            explanation = input.explanation,
+            hdurl = input.hdurl,
+            mediaType = input.mediaType,
+            serviceVersion = input.serviceVersion,
+            url = input.url)
+
     fun mapApodToDomain(input: List<ApodEntity>?): List<Apod> {
         val outout = ArrayList<Apod>()
         input?.map{

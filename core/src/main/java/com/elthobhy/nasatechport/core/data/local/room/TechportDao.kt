@@ -30,6 +30,9 @@ interface TechportDao {
     @Query("SELECT * FROM tech_port WHERE projectid = :projectId")
     fun getDetail(projectId: String): LiveData<TechportEntity>
 
+    @Query("SELECT * FROM apod_entity WHERE title = :title")
+    fun getDetailApod(title: String): LiveData<ApodEntity>
+
     @Query("SELECT * FROM tech_port WHERE isFavorite = 1")
     fun getFavorite(): PagingSource<Int,TechportEntity>
 }

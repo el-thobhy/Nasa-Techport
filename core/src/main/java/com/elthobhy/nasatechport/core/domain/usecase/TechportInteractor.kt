@@ -21,4 +21,7 @@ class TechportInteractor(private val repository: ITechportRepository): TechportU
 
     override fun getDetail(id: String): LiveData<Techport> = repository.getDetail(id)
 
+    override fun getDetailApod(title: String): LiveData<Apod> = repository.getDetailApod(title)
+
+
 }

@@ -73,7 +73,7 @@ class TechportRepository(
             }
 
             override fun shouldFetch(data: List<Apod>?): Boolean {
-                return true
+                return data == null || data.isEmpty()
             }
 
             @RequiresApi(Build.VERSION_CODES.O)
@@ -108,5 +108,9 @@ class TechportRepository(
 
     override fun getDetail(id: String): LiveData<Techport>{
         return techportDatabase.techportDao().getDetail(id).map { DataMapper.mapEntitiesToDomain(it) }
+    }
+
+    override fun getDetailApod(title: String): LiveData<Apod> {
+        return techportDatabase.techportDao().getDetailApod(title).map { DataMapper.mapApodEntitiesToDomain(it) }
     }
 }

@@ -13,4 +13,5 @@ interface TechportUsecase {
     fun getFavorite(): Flow<PagingData<Techport>>
     fun setFavorite(techport: Techport, state: Boolean)
     fun getDetail(id: String): LiveData<Techport>
+    fun getDetailApod(title: String): LiveData<Apod>
 }

@@ -1,5 +1,6 @@
 package com.elthobhy.nasatechport.main
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.nasatechport.R
 import com.elthobhy.nasatechport.core.databinding.ItemApodBinding
 import com.elthobhy.nasatechport.core.domain.model.Apod
+import com.elthobhy.nasatechport.core.utils.Constants
+import com.elthobhy.nasatechport.detail.DetailActivity
 
 class ApodAdapter: ListAdapter<Apod, ApodAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
@@ -37,6 +40,11 @@ class ApodAdapter: ListAdapter<Apod, ApodAdapter.MyViewHolder>(DIFF_CALLBACK) {
                 titleApod.text = data?.title
                 copyright.text = data?.copyright
                 date.text = data?.date
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                        .putExtra(Constants.APOD, data?.title)
+                    itemView.context.startActivity(intent)
+                }
             }
         }
     }
