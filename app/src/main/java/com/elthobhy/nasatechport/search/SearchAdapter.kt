@@ -3,6 +3,7 @@ package com.elthobhy.nasatechport.search
 import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -47,15 +48,20 @@ class SearchAdapter: ListAdapter<ApodTechportDomain, SearchAdapter.MyViewHolder>
                 }else{
                     tvDateUpdate.text = data?.date
                 }
-                if(data?.image != null){
+
+
+                if(data?.image == null){
+                    imageList.layoutParams.height = 0
+                    imageList.visibility = View.GONE
+                }else{
+                    imageList.visibility = View.VISIBLE
                     Glide.with(itemView)
                         .load(data.image)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .placeholder(R.color.white)
                         .into(imageList)
-                }else{
-                    imageList.layoutParams.height = 0
                 }
+
                 tvTitle.text = data?.title
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)

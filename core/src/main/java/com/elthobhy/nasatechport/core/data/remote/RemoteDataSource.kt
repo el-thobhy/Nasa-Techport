@@ -3,6 +3,7 @@ package com.elthobhy.nasatechport.core.data.remote
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.elthobhy.nasatechport.core.data.local.LocalDataSource
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 import com.elthobhy.nasatechport.core.data.remote.network.ApiService
 import com.elthobhy.nasatechport.core.data.remote.network.ApiServiceApod
@@ -13,11 +14,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 class RemoteDataSource(
     private val apiService: ApiService,
-    private val apiServiceApod: ApiServiceApod
+    private val apiServiceApod: ApiServiceApod,
+    private val localDataSource: LocalDataSource
 ) {
     suspend fun getAllData(): Flow<ApiResponse<List<TechportEntity>>>{
         return flow {
@@ -50,14 +53,11 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun getBoth(): Flow<ApiResponse<List<ApodTechportResponse>>>{
+    suspend fun getSearch(): Flow<ApiResponse<List<ApodTechportResponse>>>{
         return flow{
             try{
-                val end = LocalDate.now()
-                val start = LocalDate.now().minusDays(7)
-                val responseApod = apiServiceApod.getApod(startDate = start, endDate = end)
-                val responseTechport = apiService.getData()
+                val responseApod = localDataSource.getDataApod()
+                val responseTechport = localDataSource.getDataTech()
                 val resposeApodTechportResponse = ArrayList<ApodTechportResponse>()
                 responseApod.map {
                     val apod = ApodTechportResponse(

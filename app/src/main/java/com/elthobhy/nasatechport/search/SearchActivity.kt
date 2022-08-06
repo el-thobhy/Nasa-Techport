@@ -53,7 +53,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showData(newText: String) {
-        searchViewModel.getData(newText).observe(this){
+        searchViewModel.getDataSearch(newText).observe(this){
             if(it.data!=null){
                 when(it.status){
                     Status.LOADING->{

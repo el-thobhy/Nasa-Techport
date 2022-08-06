@@ -5,6 +5,7 @@ import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
 import com.elthobhy.nasatechport.core.data.local.entity.ApodTechportEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 import com.elthobhy.nasatechport.core.data.local.room.TechportDao
+import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource(private val techportDao: TechportDao) {
@@ -16,6 +17,10 @@ class LocalDataSource(private val techportDao: TechportDao) {
 
     fun getFavoriteTechport(): PagingSource<Int, TechportEntity> = techportDao.getFavorite()
 
+
+    fun getDataApod(): List<ApodEntity> = techportDao.getDataApodSearch()
+
+    fun getDataTech(): List<TechportEntity> = techportDao.getDataTechSearch()
 
 
     suspend fun insertTechport(techportResponse: List<TechportEntity>) = techportDao.insertData(techportResponse)

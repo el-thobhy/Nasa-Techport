@@ -28,6 +28,12 @@ interface TechportDao {
     @Query("SELECT * FROM apod_entity")
     fun getDataApod(): Flow<List<ApodEntity>>
 
+    @Query("SELECT * FROM apod_entity")
+    fun getDataApodSearch(): List<ApodEntity>
+
+    @Query("SELECT * FROM tech_port")
+    fun getDataTechSearch(): List<TechportEntity>
+
     @Query("SELECT * FROM apod_techport WHERE title_search LIKE '%' || :search || '%'")
     fun getDataBoth(search: String?): Flow<List<ApodTechportEntity>>
 

@@ -57,7 +57,7 @@ val databaseModule = module {
 
 val repositoryModule = module {
     single { LocalDataSource(get()) }
-    single { RemoteDataSource(get(), get()) }
+    single { RemoteDataSource(get(), get(), get()) }
     single { TechportRemoteMediator(get(), get()) }
     single<ITechportRepository> { TechportRepository(get(), get(), get(), get(), get()) }
     factory { AppExecutors() }

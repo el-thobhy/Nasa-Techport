@@ -99,9 +99,8 @@ class TechportRepository(
                 return data == null || data.isEmpty()
             }
 
-            @RequiresApi(Build.VERSION_CODES.O)
             override suspend fun createCall(): Flow<ApiResponse<List<ApodTechportResponse>>> {
-                return remoteDataSource.getBoth()
+                return remoteDataSource.getSearch()
             }
 
             override suspend fun saveCallResult(data: List<ApodTechportResponse>) {
