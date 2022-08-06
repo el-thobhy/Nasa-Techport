@@ -38,6 +38,7 @@ class TechportListAdapter :
             } else {
                 data.lastupdated
             }
+            binding.imageList.layoutParams.height = 0
             binding.tvTitle.text = data.title
             binding.tvDateUpdate.text = updated.toString()
             itemView.setOnClickListener {

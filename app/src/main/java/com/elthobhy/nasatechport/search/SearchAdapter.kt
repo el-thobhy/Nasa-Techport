@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.elthobhy.nasatechport.R
 import com.elthobhy.nasatechport.core.databinding.ItemQuoteBinding
 import com.elthobhy.nasatechport.core.domain.model.ApodTechportDomain
 import com.elthobhy.nasatechport.core.utils.Constants
@@ -44,7 +47,15 @@ class SearchAdapter: ListAdapter<ApodTechportDomain, SearchAdapter.MyViewHolder>
                 }else{
                     tvDateUpdate.text = data?.date
                 }
-
+                if(data?.image != null){
+                    Glide.with(itemView)
+                        .load(data.image)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.color.white)
+                        .into(imageList)
+                }else{
+                    imageList.layoutParams.height = 0
+                }
                 tvTitle.text = data?.title
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
