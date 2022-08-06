@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.elthobhy.nasatechport.core.databinding.ItemQuoteBinding
-import com.elthobhy.nasatechport.core.domain.model.Techport
+import com.elthobhy.nasatechport.core.domain.model.ApodTechportDomain
 import com.elthobhy.nasatechport.core.utils.Constants
 import com.elthobhy.nasatechport.detail.DetailActivity
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class SearchAdapter: ListAdapter<Techport, SearchAdapter.MyViewHolder>(DIFF_CALLBACK){
+class SearchAdapter: ListAdapter<ApodTechportDomain, SearchAdapter.MyViewHolder>(DIFF_CALLBACK){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -31,19 +31,25 @@ class SearchAdapter: ListAdapter<Techport, SearchAdapter.MyViewHolder>(DIFF_CALL
 
     class MyViewHolder(private val binding: ItemQuoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Techport?) {
+        fun bind(data: ApodTechportDomain?) {
             binding.apply {
-                val latestUpdated = data?.lastupdated?.split('T')
-                val updated = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    LocalDate.parse(latestUpdated?.get(0), DateTimeFormatter.ISO_DATE)
-                } else {
-                    data?.lastupdated
+                if(data?.date?.contains("T") == true){
+                    val latestUpdated = data.date?.split('T')
+                    val updated = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        LocalDate.parse(latestUpdated?.get(0), DateTimeFormatter.ISO_DATE)
+                    } else {
+                        data.date
+                    }
+                    tvDateUpdate.text = updated.toString()
+                }else{
+                    tvDateUpdate.text = data?.date
                 }
+
                 tvTitle.text = data?.title
-                tvDateUpdate.text = updated.toString()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                        .putExtra(Constants.DATA, data?.projectid)
+                        .putExtra(Constants.DATA, data?.projectId)
+                        .putExtra(Constants.APOD, data?.title)
                     itemView.context.startActivity(intent)
                 }
             }
@@ -51,12 +57,12 @@ class SearchAdapter: ListAdapter<Techport, SearchAdapter.MyViewHolder>(DIFF_CALL
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Techport>() {
-            override fun areItemsTheSame(oldItem: Techport, newItem: Techport): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ApodTechportDomain>() {
+            override fun areItemsTheSame(oldItem: ApodTechportDomain, newItem: ApodTechportDomain): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Techport, newItem: Techport): Boolean {
+            override fun areContentsTheSame(oldItem: ApodTechportDomain, newItem: ApodTechportDomain): Boolean {
                 return oldItem.title == newItem.title
             }
         }

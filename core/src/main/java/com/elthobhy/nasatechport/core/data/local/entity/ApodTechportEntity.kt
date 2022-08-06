@@ -14,5 +14,11 @@ data class ApodTechportEntity(
     var name_search: String? = null,
 
     @ColumnInfo(name = "date_search")
-    var date_search: String? = null
+    var date_search: String? = null,
+
+    @ColumnInfo(name = "image_search")
+    var image_search: String? = null,
+
+    @ColumnInfo(name = "project_search")
+    var projectId: String? = null,
 )

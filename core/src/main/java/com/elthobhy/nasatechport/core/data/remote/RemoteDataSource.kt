@@ -7,16 +7,13 @@ import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 import com.elthobhy.nasatechport.core.data.remote.network.ApiService
 import com.elthobhy.nasatechport.core.data.remote.network.ApiServiceApod
 import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
-import com.elthobhy.nasatechport.core.data.remote.response.ApodTechport
+import com.elthobhy.nasatechport.core.data.remote.response.ApodTechportResponse
 import com.elthobhy.nasatechport.core.data.remote.response.vo.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
-import java.util.*
-import kotlin.collections.ArrayList
 
 class RemoteDataSource(
     private val apiService: ApiService,
@@ -31,7 +28,6 @@ class RemoteDataSource(
                 }else{
                     emit(ApiResponse.error())
                 }
-                Log.e("remote", "getAllData: $response", )
             }catch (e: Exception){
                 emit(ApiResponse.error(e.toString()))
                 Log.e("RemoteDataSource", "getAllData: ${e.message.toString()}" )
@@ -46,45 +42,45 @@ class RemoteDataSource(
                 val end = LocalDate.now()
                 val start = LocalDate.now().minusDays(7)
                 val response = apiServiceApod.getApod(startDate = start, endDate = end)
-                Log.e("remote", "getApodData: $response", )
                 emit(ApiResponse.success(response))
             }catch (e: Exception){
                 emit(ApiResponse.error(e.toString()))
-                Log.e("RemoteData", "getApodData: ${e.message.toString()}", )
+                Log.e("RemoteData", "getApodData: ${e.message.toString()}" )
             }
         }.flowOn(Dispatchers.IO)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun getBoth(): Flow<ApiResponse<List<ApodTechport>>>{
+    suspend fun getBoth(): Flow<ApiResponse<List<ApodTechportResponse>>>{
         return flow{
             try{
                 val end = LocalDate.now()
                 val start = LocalDate.now().minusDays(7)
                 val responseApod = apiServiceApod.getApod(startDate = start, endDate = end)
                 val responseTechport = apiService.getData()
-                val resposeApodTechport = ArrayList<ApodTechport>()
+                val resposeApodTechportResponse = ArrayList<ApodTechportResponse>()
                 responseApod.map {
-                    val apod = ApodTechport(
+                    val apod = ApodTechportResponse(
                         title = it.title,
                         name = it.copyright,
-                        date = it.date
+                        date = it.date,
+                        image = it.url,
                     )
-                    resposeApodTechport.add(apod)
+                    resposeApodTechportResponse.add(apod)
                 }
                 responseTechport.map{
-                    val techport = ApodTechport(
+                    val techport = ApodTechportResponse(
                         title = it.title,
                         name = it.responsiblenasaprogram,
-                        date = it.lastupdated
+                        date = it.lastupdated,
+                        projectId = it.projectid
                     )
-                    resposeApodTechport.add(techport)
+                    resposeApodTechportResponse.add(techport)
                 }
-
-                emit(ApiResponse.success(resposeApodTechport.toList()))
+                emit(ApiResponse.success(resposeApodTechportResponse.toList()))
             }catch (e: Exception){
                 emit(ApiResponse.error(e.toString()))
-                Log.e("remote", "getBoth: ${e.message.toString()}", )
+                Log.e("remote", "getBoth: ${e.message.toString()}" )
             }
         }.flowOn(Dispatchers.IO)
     }

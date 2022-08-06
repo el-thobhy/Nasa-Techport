@@ -2,8 +2,8 @@ package com.elthobhy.nasatechport.core.domain.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
-import com.elthobhy.nasatechport.core.data.remote.response.ApodTechport
 import com.elthobhy.nasatechport.core.domain.model.Apod
+import com.elthobhy.nasatechport.core.domain.model.ApodTechportDomain
 import com.elthobhy.nasatechport.core.domain.model.Techport
 import com.elthobhy.nasatechport.core.utils.vo.Resource
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ interface ITechportRepository {
 
     fun getApod(): Flow<Resource<List<Apod>>>
 
-    fun getSearch(search: String?): Flow<Resource<List<Techport>>>
+    fun getSearch(search: String?): Flow<Resource<List<ApodTechportDomain>>>
 
     fun getDetail(id: String): LiveData<Techport>
 

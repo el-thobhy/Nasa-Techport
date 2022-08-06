@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.lifecycleScope
 import com.elthobhy.nasatechport.R
 import com.elthobhy.nasatechport.core.utils.vo.Status
 import com.elthobhy.nasatechport.databinding.ActivitySearchBinding
@@ -37,14 +36,14 @@ class SearchActivity : AppCompatActivity() {
         searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
                 if(p0!=null){
                     showData(p0)
                 }
                 Log.e("tes", "onQueryTextChange: $p0" )
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
                 return true
             }
 
@@ -58,11 +57,10 @@ class SearchActivity : AppCompatActivity() {
             if(it.data!=null){
                 when(it.status){
                     Status.LOADING->{
+                        Log.e("loading", "showData: " )
                     }
                     Status.SUCCESS->{
-                        lifecycleScope.launchWhenStarted {
-                            adapterList.submitList(it.data!!)
-                        }
+                        adapterList.submitList(it.data)
                     }
                     Status.ERROR->{
                         Log.e("eror", "showData: ${it.message}" )

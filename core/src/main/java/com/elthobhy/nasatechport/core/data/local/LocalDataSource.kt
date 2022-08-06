@@ -12,7 +12,7 @@ class LocalDataSource(private val techportDao: TechportDao) {
 
     fun getApod() : Flow<List<ApodEntity>> = techportDao.getDataApod()
 
-    fun getBoth(search: String?) : Flow<List<TechportEntity>> = techportDao.getDataBoth(search)
+    fun getSearch(search: String?) : Flow<List<ApodTechportEntity>> = techportDao.getDataBoth(search)
 
     fun getFavoriteTechport(): PagingSource<Int, TechportEntity> = techportDao.getFavorite()
 

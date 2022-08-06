@@ -1,29 +1,30 @@
 package com.elthobhy.nasatechport.core.data
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.elthobhy.nasatechport.core.data.local.LocalDataSource
-import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 import com.elthobhy.nasatechport.core.data.local.room.TechportDatabase
 import com.elthobhy.nasatechport.core.data.remote.RemoteDataSource
 import com.elthobhy.nasatechport.core.data.remote.network.ApiService
 import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
-import com.elthobhy.nasatechport.core.data.remote.response.ApodTechport
+import com.elthobhy.nasatechport.core.data.remote.response.ApodTechportResponse
 import com.elthobhy.nasatechport.core.data.remote.response.vo.ApiResponse
 import com.elthobhy.nasatechport.core.domain.model.Apod
+import com.elthobhy.nasatechport.core.domain.model.ApodTechportDomain
+import com.elthobhy.nasatechport.core.domain.model.Techport
 import com.elthobhy.nasatechport.core.domain.repository.ITechportRepository
 import com.elthobhy.nasatechport.core.utils.AppExecutors
 import com.elthobhy.nasatechport.core.utils.DataMapper
 import com.elthobhy.nasatechport.core.utils.vo.Resource
-import com.elthobhy.nasatechport.core.domain.model.Techport
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import java.util.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TechportRepository(
     private val techportDatabase: TechportDatabase,
@@ -88,22 +89,24 @@ class TechportRepository(
             }
         }.asFlow()
 
-    override fun getSearch(search: String?): Flow<Resource<List<Techport>>> =
-        object : NetworkBoundResource<List<Techport>, List<TechportEntity>>(){
-            override suspend fun loadFromDb(): Flow<List<Techport>> {
-                return localDataSource.getBoth(search).map { DataMapper.mapTechportEntitiesToDomain(it) }
+    override fun getSearch(search: String?): Flow<Resource<List<ApodTechportDomain>>> =
+        object : NetworkBoundResource<List<ApodTechportDomain>, List<ApodTechportResponse>>(){
+            override suspend fun loadFromDb(): Flow<List<ApodTechportDomain>> {
+                return localDataSource.getSearch(search).map { DataMapper.mapSearchEntitiesToDomain(it) }
             }
 
-            override fun shouldFetch(data: List<Techport>?): Boolean {
-                return data == null
+            override fun shouldFetch(data: List<ApodTechportDomain>?): Boolean {
+                return data == null || data.isEmpty()
             }
 
-            override suspend fun createCall(): Flow<ApiResponse<List<TechportEntity>>> {
-                return remoteDataSource.getAllData()
+            @RequiresApi(Build.VERSION_CODES.O)
+            override suspend fun createCall(): Flow<ApiResponse<List<ApodTechportResponse>>> {
+                return remoteDataSource.getBoth()
             }
 
-            override suspend fun saveCallResult(data: List<TechportEntity>) {
-                return localDataSource.insertTechport(data)
+            override suspend fun saveCallResult(data: List<ApodTechportResponse>) {
+                val dataMap = DataMapper.mapSearchResponsesToEntities(data)
+                return localDataSource.insertApodTechport(dataMap)
             }
 
         }.asFlow()
