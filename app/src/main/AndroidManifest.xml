@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elthobhy.nasatechport">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name=".MyKoinApp"
         android:allowBackup="false"
@@ -12,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyUnlimitedQuotes">
+        <activity
+            android:name=".search.SearchActivity"
+            android:exported="false" />
         <activity
             android:name="com.elthobhy.nasatechport.main.MainActivity"
             android:exported="false" />
@@ -28,5 +29,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

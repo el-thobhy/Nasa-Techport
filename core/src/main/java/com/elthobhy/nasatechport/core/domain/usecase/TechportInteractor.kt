@@ -6,7 +6,6 @@ import com.elthobhy.nasatechport.core.domain.model.Apod
 import com.elthobhy.nasatechport.core.domain.repository.ITechportRepository
 import com.elthobhy.nasatechport.core.utils.vo.Resource
 import com.elthobhy.nasatechport.core.domain.model.Techport
-import com.elthobhy.nasatechport.core.domain.usecase.TechportUsecase
 import kotlinx.coroutines.flow.Flow
 
 class TechportInteractor(private val repository: ITechportRepository): TechportUsecase {
@@ -14,6 +13,8 @@ class TechportInteractor(private val repository: ITechportRepository): TechportU
     override fun getData(): Flow<Resource<PagingData<Techport>>> = repository.getData()
 
     override fun getApod(): Flow<Resource<List<Apod>>> = repository.getApod()
+
+    override fun getSearch(search: String?): Flow<Resource<List<Techport>>> = repository.getSearch(search)
 
     override fun getFavorite(): Flow<PagingData<Techport>> = repository.getFavorite()
 

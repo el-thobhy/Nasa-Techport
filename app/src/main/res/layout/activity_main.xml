@@ -6,6 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".main.MainActivity">
 
+
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
@@ -20,10 +22,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_margin="20dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="270dp"
+                    android:paddingStart="9dp"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:background="@drawable/bg_view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
                 <TextView
                     android:id="@+id/text_apod"
                     android:layout_width="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_view"
                     app:layout_constraintBottom_toTopOf="@id/rv_apod"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"

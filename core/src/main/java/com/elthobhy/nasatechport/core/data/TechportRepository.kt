@@ -13,6 +13,7 @@ import com.elthobhy.nasatechport.core.data.local.room.TechportDatabase
 import com.elthobhy.nasatechport.core.data.remote.RemoteDataSource
 import com.elthobhy.nasatechport.core.data.remote.network.ApiService
 import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
+import com.elthobhy.nasatechport.core.data.remote.response.ApodTechport
 import com.elthobhy.nasatechport.core.data.remote.response.vo.ApiResponse
 import com.elthobhy.nasatechport.core.domain.model.Apod
 import com.elthobhy.nasatechport.core.domain.repository.ITechportRepository
@@ -20,9 +21,9 @@ import com.elthobhy.nasatechport.core.utils.AppExecutors
 import com.elthobhy.nasatechport.core.utils.DataMapper
 import com.elthobhy.nasatechport.core.utils.vo.Resource
 import com.elthobhy.nasatechport.core.domain.model.Techport
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import java.util.*
 
 class TechportRepository(
     private val techportDatabase: TechportDatabase,
@@ -86,6 +87,29 @@ class TechportRepository(
                 return localDataSource.insertApod(response)
             }
         }.asFlow()
+
+    override fun getSearch(search: String?): Flow<Resource<List<Techport>>> =
+        object : NetworkBoundResource<List<Techport>, List<TechportEntity>>(){
+            override suspend fun loadFromDb(): Flow<List<Techport>> {
+                return localDataSource.getBoth(search).map { DataMapper.mapTechportEntitiesToDomain(it) }
+            }
+
+            override fun shouldFetch(data: List<Techport>?): Boolean {
+                return data == null
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<List<TechportEntity>>> {
+                return remoteDataSource.getAllData()
+            }
+
+            override suspend fun saveCallResult(data: List<TechportEntity>) {
+                return localDataSource.insertTechport(data)
+            }
+
+        }.asFlow()
+
+
+
 
 
     @OptIn(ExperimentalPagingApi::class)

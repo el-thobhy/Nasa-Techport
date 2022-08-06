@@ -1,13 +1,16 @@
 package com.elthobhy.nasatechport.core.data.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
+import com.elthobhy.nasatechport.core.data.local.entity.ApodTechportEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
+import com.elthobhy.nasatechport.core.data.remote.response.ApodTechport
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,11 +21,17 @@ interface TechportDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertApod(apodEntity: List<ApodEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertApodTech(apodTechport: List<ApodTechportEntity>)
+
     @Query("SELECT * FROM tech_port")
     fun getData(): PagingSource<Int, TechportEntity>
 
     @Query("SELECT * FROM apod_entity")
     fun getDataApod(): Flow<List<ApodEntity>>
+
+    @Query("SELECT * FROM tech_port WHERE title LIKE '%' || :search || '%'")
+    fun getDataBoth(search: String?): Flow<List<TechportEntity>>
 
     @Query("DELETE FROM tech_port")
     suspend fun deleteAll()

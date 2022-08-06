@@ -3,8 +3,10 @@ package com.elthobhy.nasatechport.core.utils
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.elthobhy.nasatechport.core.data.local.entity.ApodEntity
+import com.elthobhy.nasatechport.core.data.local.entity.ApodTechportEntity
 import com.elthobhy.nasatechport.core.data.local.entity.TechportEntity
 import com.elthobhy.nasatechport.core.data.remote.response.ApodResponseItem
+import com.elthobhy.nasatechport.core.data.remote.response.ApodTechport
 import com.elthobhy.nasatechport.core.data.remote.response.TechportResponseItem
 import com.elthobhy.nasatechport.core.domain.model.Apod
 import com.elthobhy.nasatechport.core.domain.model.Techport
@@ -44,6 +46,21 @@ object DataMapper {
             )
         }
 
+    fun mapTechportEntitiesToDomain(input: List<TechportEntity>): List<Techport> =
+        input.map {
+            Techport(
+                projectid = it.projectid,
+                description = it.description,
+                title = it.title,
+                responsiblenasaprogram = it.responsiblenasaprogram,
+                lastupdated = it.lastupdated,
+                projecturl = it.projecturl,
+                projectapiurl = it.projectapiurl,
+                primarytaxonomy = it.primarytaxonomy,
+                isFavorite = it.isFavorite
+            )
+        }
+
     fun mapEntitiesToDomain(input: TechportEntity) =
             Techport(
                 projectid = input.projectid,
@@ -65,7 +82,8 @@ object DataMapper {
             hdurl = input.hdurl,
             mediaType = input.mediaType,
             serviceVersion = input.serviceVersion,
-            url = input.url)
+            url = input.url
+        )
 
     fun mapApodToDomain(input: List<ApodEntity>?): List<Apod> {
         val outout = ArrayList<Apod>()
@@ -85,6 +103,19 @@ object DataMapper {
         return outout
     }
 
+    fun mapEntitiesApodTechToDomain(input: List<ApodTechportEntity>?): List<ApodTechport> {
+        val output = ArrayList<ApodTechport>()
+        input?.map {
+            val apodTechport = ApodTechport(
+                title = it.title_search,
+                date = it.date_search,
+                name = it.name_search
+            )
+            output.add(apodTechport)
+        }
+        return output
+    }
+
 
     fun mapApodResponToDomain(input: List<ApodResponseItem>?): List<ApodEntity> {
         val output = ArrayList<ApodEntity>()
@@ -100,6 +131,19 @@ object DataMapper {
                 url = it.url!!
             )
             output.add(apod)
+        }
+        return output
+    }
+
+    fun mapDomainApoTechToEntities(input: List<ApodTechport>?): List<ApodTechportEntity> {
+        val output = ArrayList<ApodTechportEntity>()
+        input?.map {
+            val apodTechportEntity = ApodTechportEntity(
+                title_search = it.title!!,
+                name_search = it.name,
+                date_search = it.date
+            )
+            output.add(apodTechportEntity)
         }
         return output
     }

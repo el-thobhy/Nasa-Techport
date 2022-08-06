@@ -1,5 +1,6 @@
 package com.elthobhy.nasatechport.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.nasatechport.core.ui.adapter.LoadingStateAdapter
 import com.elthobhy.nasatechport.core.utils.vo.Status
 import com.elthobhy.nasatechport.databinding.ActivityMainBinding
+import com.elthobhy.nasatechport.search.SearchActivity
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         getDataApod()
         getData()
+        binding.searchView.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
     }
 
     private fun getDataApod() {
