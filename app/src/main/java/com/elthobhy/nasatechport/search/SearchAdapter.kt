@@ -48,20 +48,13 @@ class SearchAdapter: ListAdapter<ApodTechportDomain, SearchAdapter.MyViewHolder>
                 }else{
                     tvDateUpdate.text = data?.date
                 }
-
-
-                if(data?.image == null){
-                    imageList.layoutParams.height = 0
-                    imageList.visibility = View.GONE
-                }else{
-                    imageList.visibility = View.VISIBLE
-                    Glide.with(itemView)
-                        .load(data.image)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.color.white)
-                        .into(imageList)
-                }
-
+                imageList.visibility = View.VISIBLE
+                if(data?.image == null) imageList.visibility = View.GONE
+                Glide.with(itemView)
+                    .load(data?.image)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(R.color.white)
+                    .into(imageList)
                 tvTitle.text = data?.title
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
