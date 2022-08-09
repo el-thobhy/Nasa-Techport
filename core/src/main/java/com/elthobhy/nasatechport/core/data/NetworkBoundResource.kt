@@ -23,7 +23,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 }
                 StatusResponseNetwork.ERROR-> {
                     onFetchFailed()
-                    emit(Resource.error(apiResponse.message+" | OFFLINE MODE |"))
+                    emit(Resource.error(apiResponse.message+"\n| OFFLINE MODE |"+"\n| Check Your Internet Connection |"))
                     emitAll(loadFromDb().map { Resource.success(it) })
                 }
             }
