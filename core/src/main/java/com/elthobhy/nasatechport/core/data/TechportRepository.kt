@@ -52,7 +52,7 @@ class TechportRepository(
             }
 
             override fun shouldFetch(data: PagingData<Techport>?): Boolean {
-                return data == null
+                return true
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<TechportEntity>>> {

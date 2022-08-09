@@ -29,15 +29,11 @@ class RemoteDataSource(
         return flow {
             try {
                 val response = apiService.getData()
-                if(response.isNotEmpty()){
                     emit(ApiResponse.success(response))
-                }else{
-                    emit(ApiResponse.error())
-                }
             }catch (e: Exception){
                 emit(ApiResponse.error(e.toString()))
                 Log.e("RemoteDataSource", "getAllData: ${e.message.toString()}" )
-            } as Unit
+            }
         }.flowOn(Dispatchers.IO)
     }
 
