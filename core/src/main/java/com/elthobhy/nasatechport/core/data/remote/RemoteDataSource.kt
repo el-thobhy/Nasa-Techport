@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RemoteDataSource(
     private val apiService: ApiService,
@@ -42,8 +45,8 @@ class RemoteDataSource(
    suspend fun getApodData(): Flow<ApiResponse<List<ApodResponseItem>>>{
         return flow {
             try {
-                val end = LocalDate.now()
-                val start = LocalDate.now().minusDays(7)
+                val end = LocalDate.parse(LocalDate.now().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(Locale.US))
+                val start = end.minusDays(7)
                 val response = apiServiceApod.getApod(startDate = start, endDate = end)
                 emit(ApiResponse.success(response))
             }catch (e: Exception){

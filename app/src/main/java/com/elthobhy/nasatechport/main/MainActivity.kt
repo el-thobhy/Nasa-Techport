@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                             },1500)
                     }
                     Status.ERROR->{
-                        Toast.makeText(this, "Please Check your Internet Connection",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,it.message+" Please check your Internet connection" ,Toast.LENGTH_LONG).show()
                     }
                 }
             }

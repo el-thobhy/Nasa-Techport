@@ -75,7 +75,7 @@ class TechportRepository(
             }
 
             override fun shouldFetch(data: List<Apod>?): Boolean {
-                return data == null || data.isEmpty()
+                return true
             }
 
             @RequiresApi(Build.VERSION_CODES.O)
