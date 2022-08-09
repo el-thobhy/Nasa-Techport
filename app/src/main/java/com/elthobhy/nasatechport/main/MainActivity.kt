@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.nasatechport.core.ui.adapter.LoadingStateAdapter
+import com.elthobhy.nasatechport.core.utils.showDialogError
 import com.elthobhy.nasatechport.core.utils.vo.Status
 import com.elthobhy.nasatechport.databinding.ActivityMainBinding
 import com.elthobhy.nasatechport.search.SearchActivity
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                             },1500)
                     }
                     Status.ERROR->{
-                        Toast.makeText(this,it.message ,Toast.LENGTH_LONG).show()
+                        showDialogError(this,it.message.toString())
                     }
                 }
             }
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                             },1500)
                     }
                     Status.ERROR->{
-                        Toast.makeText(this, it.message,Toast.LENGTH_SHORT).show()
+                        showDialogError(this,it.message.toString())
                     }
                 }
             }

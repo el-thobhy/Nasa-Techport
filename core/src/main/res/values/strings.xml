@@ -11,4 +11,6 @@
     <string name="text_title">Text Title</string>
     <string name="copyright">Copyright</string>
     <string name="date_upload">Date Upload</string>
+    <string name="default_text">-</string>
+    <string name="error">Error</string>
 </resources>
